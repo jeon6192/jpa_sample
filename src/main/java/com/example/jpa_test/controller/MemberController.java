@@ -30,7 +30,7 @@ public class MemberController {
     public ResponseEntity<MemberDTO> main(@AuthenticationPrincipal CustomUserDetails customUserDetails) throws UserException {
         Long idx = customUserDetails.getMember().getIdx();
         if (idx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return ok(memberService.getMemberById(idx));
@@ -49,7 +49,7 @@ public class MemberController {
     @GetMapping("/member/{memberIdx}")
     public ResponseEntity<MemberDTO> getMemberById(@PathVariable Long memberIdx) throws UserException {
         if (memberIdx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return ok(memberService.getMemberById(memberIdx));

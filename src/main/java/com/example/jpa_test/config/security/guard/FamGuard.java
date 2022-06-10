@@ -28,7 +28,7 @@ public class FamGuard {
 
     public final boolean checkAuthority(Long famIdx) throws UserException {
         if (famIdx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         Fam fam = getFam(famIdx);
@@ -38,7 +38,7 @@ public class FamGuard {
 
     public final boolean checkAuthority(Long famIdx, Long memberIdx) throws UserException {
         if (famIdx == null || memberIdx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return hasRole(famIdx) || isOwner(memberIdx);

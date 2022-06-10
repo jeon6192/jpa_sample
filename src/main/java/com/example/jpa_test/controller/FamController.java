@@ -40,7 +40,7 @@ public class FamController {
     @GetMapping("/fam/{famIdx}")
     public ResponseEntity<FamDTO> getFamById(@PathVariable Long famIdx) throws UserException {
         if (famIdx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return ok(famService.getFamById(famIdx));
@@ -50,7 +50,7 @@ public class FamController {
     @PreAuthorize("@famGuard.checkAuthority(#famIdx)")
     public ResponseEntity<SimpleResponse> deleteFam(@PathVariable Long famIdx) throws UserException {
         if (famIdx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return ok(famService.deleteFam(famIdx));
@@ -60,7 +60,7 @@ public class FamController {
     public ResponseEntity<FamMembersDTO> addMemberToFam(@PathVariable Long famIdx, @PathVariable Long memberIdx,
                                                         @RequestBody FamMemberDTO famMemberDTO) throws UserException {
         if (famIdx == null || memberIdx == null || famMemberDTO == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return ok(famService.addMemberToFam(famIdx, memberIdx, famMemberDTO));
@@ -69,7 +69,7 @@ public class FamController {
     @GetMapping("/fam/member/{famIdx}")
     public ResponseEntity<FamMembersDTO> getMembersByFam(@PathVariable Long famIdx) throws UserException {
         if (famIdx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return ok(famService.getMembersByFam(famIdx));
@@ -79,7 +79,7 @@ public class FamController {
     @PreAuthorize("@famGuard.checkAuthority(#famIdx, #memberIdx)")
     public ResponseEntity<SimpleResponse> deleteFamMembers(@PathVariable Long famIdx, @PathVariable Long memberIdx) throws UserException {
         if (famIdx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return ok(famService.deleteFam(famIdx));

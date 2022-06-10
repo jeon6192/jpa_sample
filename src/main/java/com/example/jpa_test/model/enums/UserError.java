@@ -7,9 +7,9 @@ import static org.springframework.http.HttpStatus.*;
 
 @Getter
 public enum UserError {
-    BAB_REQUEST("001", "요청 값 오류", BAD_REQUEST),
+    BAD_REQUEST("001", "요청 값 오류", HttpStatus.BAD_REQUEST),
     PERMISSION_DENIED("002", "인증되지 않음", UNAUTHORIZED),
-    HAVE_NO_DATA("003", "데이터 없음", BAD_REQUEST),
+    HAVE_NO_DATA("003", "데이터 없음", HttpStatus.BAD_REQUEST),
     FORBIDDEN("004", "권한 없음", HttpStatus.FORBIDDEN)
     ;
 

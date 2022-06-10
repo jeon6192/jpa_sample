@@ -15,7 +15,7 @@ public class ApiGuard {
 
     public final boolean checkAuthority(Long idx) throws UserException {
         if (idx == null) {
-            throw new UserException(UserError.BAB_REQUEST);
+            throw new UserException(UserError.BAD_REQUEST);
         }
 
         return hasRole(getUserAuthorities()) || isOwner(idx);

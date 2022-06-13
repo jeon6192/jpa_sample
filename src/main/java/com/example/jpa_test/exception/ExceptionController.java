@@ -15,11 +15,14 @@ public class ExceptionController {
 
     @ExceptionHandler(UserException.class)
     protected ResponseEntity<ErrorResponse> handleUserException(UserException e) {
-        UserError userError = e.getUserError();
+        e.printStackTrace();
+
+        final UserError userError = e.getUserError();
 
         final ErrorResponse errorResponse = ErrorResponse.builder()
                 .errorCode(userError.getErrorCode())
                 .message(userError.getMessage())
+                .detail(e.getDetail())
                 .build();
 
         return new ResponseEntity<>(errorResponse, userError.getHttpStatus());
@@ -27,11 +30,29 @@ public class ExceptionController {
 
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
+        e.printStackTrace();
+
+        final UserError userError = UserError.FORBIDDEN;
+
         final ErrorResponse errorResponse = ErrorResponse.builder()
-                .errorCode(UserError.FORBIDDEN.getErrorCode())
-                .message(UserError.FORBIDDEN.getMessage())
+                .errorCode(userError.getErrorCode())
+                .message(userError.getMessage())
                 .build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<ErrorResponse> handleException(Exception e) {
+        e.printStackTrace();
+
+        final UserError userError = UserError.NOT_DEFINED;
+
+        final ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCode(userError.getErrorCode())
+                .message(userError.getMessage())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, userError.getHttpStatus());
     }
 }

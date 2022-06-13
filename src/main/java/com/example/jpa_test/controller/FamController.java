@@ -78,11 +78,11 @@ public class FamController {
     @DeleteMapping("/fam/{famIdx}/{memberIdx}")
     @PreAuthorize("@famGuard.checkAuthority(#famIdx, #memberIdx)")
     public ResponseEntity<SimpleResponse> deleteFamMembers(@PathVariable Long famIdx, @PathVariable Long memberIdx) throws UserException {
-        if (famIdx == null) {
+        if (famIdx == null || memberIdx == null) {
             throw new UserException(UserError.BAD_REQUEST);
         }
 
-        return ok(famService.deleteFam(famIdx));
+        return ok(famService.deleteFamMembers(famIdx, memberIdx));
     }
 
 }

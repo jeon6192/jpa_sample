@@ -10,9 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -37,7 +40,11 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<MemberDTO> createMember(@RequestBody MemberDTO memberDTO) throws UserException {
+    public ResponseEntity<MemberDTO> createMember(@Validated @RequestBody MemberDTO memberDTO, BindingResult bindingResult) throws UserException {
+        if (bindingResult.hasErrors()) {
+            String message = Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage();
+            throw new UserException(UserError.BAD_REQUEST, message);
+        }
         return ok(memberService.createMember(memberDTO));
     }
 
@@ -61,5 +68,24 @@ public class MemberController {
         return ok(memberService.deleteMember(memberIdx));
     }
 
+    @PutMapping("/member/{memberIdx}/id")
+    @PreAuthorize("@apiGuard.checkAuthority(#memberIdx)")
+    public ResponseEntity<MemberDTO> updateMemberId(@PathVariable Long memberIdx, @RequestBody MemberDTO memberDTO)
+            throws UserException {
+        return ok(memberService.updateMemberId(memberIdx, memberDTO));
+    }
 
+    @PutMapping("/member/{memberIdx}/password")
+    @PreAuthorize("@apiGuard.checkAuthority(#memberIdx)")
+    public ResponseEntity<MemberDTO> updateMemberPassword(@PathVariable Long memberIdx, @RequestBody MemberDTO memberDTO)
+            throws UserException {
+        return ok(memberService.updateMemberPassword(memberIdx, memberDTO));
+    }
+
+    @PutMapping("/member/{memberIdx}/info")
+    @PreAuthorize("@apiGuard.checkAuthority(#memberIdx)")
+    public ResponseEntity<MemberDTO> updateMemberInfo(@PathVariable Long memberIdx, @RequestBody MemberDTO memberDTO)
+            throws UserException {
+        return ok(memberService.updateMemberInfo(memberIdx, memberDTO));
+    }
 }

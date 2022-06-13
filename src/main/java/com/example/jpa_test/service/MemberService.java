@@ -9,6 +9,7 @@ import com.example.jpa_test.model.entity.Role;
 import com.example.jpa_test.model.enums.UserAuthority;
 import com.example.jpa_test.model.enums.UserError;
 import com.example.jpa_test.repository.MemberRepository;
+import com.example.jpa_test.repository.MemberRepositoryImpl;
 import com.example.jpa_test.repository.RoleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,12 +22,14 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-
+    private final MemberRepositoryImpl memberRepositoryImpl;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public MemberService(MemberRepository memberRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberRepository memberRepository, MemberRepositoryImpl memberRepositoryImpl,
+                         RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
+        this.memberRepositoryImpl = memberRepositoryImpl;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -57,5 +60,40 @@ public class MemberService {
         memberRepository.delete(member);
 
         return SimpleResponse.createSuccessResponse();
+    }
+
+    public MemberDTO updateMemberId(Long memberIdx, MemberDTO memberDTO) throws UserException {
+        Member member = MemberMapper.INSTANCE.toEntity(MemberDTO.builder()
+                .idx(memberIdx)
+                .memberId(memberDTO.getMemberId())
+                .build());
+
+        memberRepositoryImpl.updateMemberId(member);
+
+        return getMemberById(memberIdx);
+    }
+
+    public MemberDTO updateMemberPassword(Long memberIdx, MemberDTO memberDTO) throws UserException {
+        Member member = MemberMapper.INSTANCE.toEntity(MemberDTO.builder()
+                .idx(memberIdx)
+                .password(passwordEncoder.encode(memberDTO.getPassword()))
+                .build());
+
+        memberRepositoryImpl.updateMemberPassword(member);
+
+        return getMemberById(memberIdx);
+    }
+
+    public MemberDTO updateMemberInfo(Long memberIdx, MemberDTO memberDTO) throws UserException {
+        Member member = MemberMapper.INSTANCE.toEntity(MemberDTO.builder()
+                .idx(memberIdx)
+                .birth(memberDTO.getBirth())
+                .name(memberDTO.getName())
+                .phone(memberDTO.getPhone())
+                .build());
+
+        memberRepositoryImpl.updateMemberInfo(member);
+
+        return getMemberById(memberIdx);
     }
 }

@@ -86,4 +86,15 @@ public class FamService {
         return SimpleResponse.createSuccessResponse();
     }
 
+    public SimpleResponse deleteFamMembers(Long famIdx, Long memberIdx) throws UserException {
+        Fam fam = FamMapper.INSTANCE.toEntity(getFamById(famIdx));
+        Member member = MemberMapper.INSTANCE.toEntity(memberService.getMemberById(memberIdx));
+        FamMembers famMembers = famMembersRepository.findByFamAndMember(fam, member)
+                .orElseThrow(() -> new UserException(UserError.HAVE_NO_DATA));
+
+        famMembersRepository.delete(famMembers);
+
+        return SimpleResponse.createSuccessResponse();
+    }
+
 }

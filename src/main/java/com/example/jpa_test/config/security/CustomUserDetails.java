@@ -52,7 +52,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return ! member.getIsLocked();
+        return member.getIsLocked() == null || ! member.getIsLocked();
     }
 
     @Override

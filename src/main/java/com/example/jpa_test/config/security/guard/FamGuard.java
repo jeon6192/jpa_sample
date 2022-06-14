@@ -44,10 +44,12 @@ public class FamGuard {
         return hasRole(famIdx) || isOwner(memberIdx);
     }
 
-    protected boolean isOwner(Long memberIdx) {
+    // 파라미터로 받은 idx 와 현재 로그인된 유저의 idx 를 비교
+    private boolean isOwner(Long memberIdx) {
         return Objects.equals(memberIdx, GuardHelper.extractMemberIdx());
     }
 
+    // 현재 로그인된 유저의 idx 를 통해 해당 유저의 fam 내의 master 권한 여부 조회
     private boolean hasRole(Long famIdx) throws UserException {
         Long extractMemberIdx = GuardHelper.extractMemberIdx();
 

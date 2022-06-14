@@ -31,14 +31,30 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
 
+        // login 시 입력한 아이디 SecurityConfig 의 filterChain() 내
+        // usernameParameter 에서 지정해준 이름으로 넘어옴 (로그인 폼에서도 해당 이름으로 데이터를 보내야함)
         String memberId = request.getParameter("memberId");
 
         Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
 
-            // 비밀번호가 틀렸을 경우, 비밀번호 실패횟수 증가.
+            /*
+            스프링 시큐리티 AuthenticationException 종류
+            - UsernameNotFoundException : 계정 없음
+            - BadCredentialsException : 비밀번호 불일치
+            - AccountStatusException
+                - AccountExpiredException : 계정만료
+                - CredentialsExpiredException : 비밀번호 만료
+                - DisabledException : 계정 비활성화
+                - LockedException : 계정 잠김
+
+            PrintWriter 객체를 통해 원하는 json 데이터를 뿌려 주기 위해서는 super.onAuthenticationFailure() 가 실행 되기 전
+            return 하여 종료 시켜주어야 함.
+            안하면 그냥 failureHandler 가 그대로 진행되서 덮혀버림
+            */
             if (exception instanceof BadCredentialsException) {
+                // 비밀번호가 틀렸을 경우, 비밀번호 실패횟수 증가.
                 int passwordFailCount = member.getPasswordFailCount() + 1;
 
                 if (passwordFailCount > 5) {

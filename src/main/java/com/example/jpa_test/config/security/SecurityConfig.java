@@ -11,6 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+// SpringSecurity 5.7.0 버전 부터는 WebSecurityConfigureAdapter 가 deprecated 되어 새로운 설정 방법 적용
+/**
+ * @see <a href="https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter">Link</a>
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

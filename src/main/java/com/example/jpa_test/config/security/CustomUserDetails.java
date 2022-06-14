@@ -12,8 +12,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+// UserDetails 를 상속하여 Override 한 메소드들은 member 테이블에 인증정보가 추가 될 때 마다 Override 한 메소드 구현부를 구현해 주어야함.
+// ex) 테이블에 isExpired 컬럼을 추가 할 시 isAccountNonExpired() 에서 해당 DB 컬럼 값을 통해 정확한 값이 리턴 되도록 수정 해야함.
 public class CustomUserDetails implements UserDetails {
 
+    // 로그인 시 필요한 컬럼 memberId, password, passwordFailCount, isLocked, lockedDate 컬럼만 생성 해주어도 됨
     private final Member member;
 
     public Member getMember() {
@@ -49,7 +52,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return ! member.getIsLocked();
     }
 
     @Override

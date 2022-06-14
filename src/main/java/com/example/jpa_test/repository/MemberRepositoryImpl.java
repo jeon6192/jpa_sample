@@ -6,6 +6,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+// Querydsl 사용을 위한 member repository 생성
+/*
+    MemberRepository extends JpaRepository
+    MemberRepositoryCustom extends MemberRepository
+    MemberRepositoryImpl (Querydsl) implements MemberRepositoryCustom
+
+    위의 방법을 사용 할 수 있지만 JPAQueryFactory 를 Bean 으로 생성 후 @Repository 어노테이션을 통해 사용하는 방법을 택함
+ */
 @Repository
 public class MemberRepositoryImpl {
 

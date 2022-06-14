@@ -31,8 +31,10 @@ public class Member extends BaseTimeEntity {
 
     private String phone;
 
+    @Column(columnDefinition = "integer default 0")
     private Integer passwordFailCount;
 
+    @Column(columnDefinition = "boolean default false")
     private Boolean isLocked;
 
     private LocalDateTime lockedDate;

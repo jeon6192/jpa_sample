@@ -18,8 +18,8 @@ public class MemberRepositoryImpl {
     QMember qMember = QMember.member;
 
     @Transactional
-    public Long updateMemberId(Member member) {
-        return queryFactory
+    public void updateMemberId(Member member) {
+        queryFactory
                 .update(qMember)
                 .set(qMember.memberId, member.getMemberId())
                 .where(qMember.idx.eq(member.getIdx()))
@@ -27,8 +27,8 @@ public class MemberRepositoryImpl {
     }
 
     @Transactional
-    public Long updateMemberPassword(Member member) {
-        return queryFactory
+    public void updateMemberPassword(Member member) {
+        queryFactory
                 .update(qMember)
                 .set(qMember.password, member.getPassword())
                 .where(qMember.idx.eq(member.getIdx()))
@@ -36,12 +36,21 @@ public class MemberRepositoryImpl {
     }
 
     @Transactional
-    public Long updateMemberInfo(Member member) {
-        return queryFactory
+    public void updateMemberInfo(Member member) {
+        queryFactory
                 .update(qMember)
                 .set(qMember.birth, member.getBirth())
                 .set(qMember.name, member.getName())
                 .where(qMember.idx.eq(member.getIdx()))
+                .execute();
+    }
+
+    @Transactional
+    public void updateAuthenticationInfo(Member member) {
+        queryFactory.update(qMember)
+                .set(qMember.passwordFailCount, member.getPasswordFailCount())
+                .set(qMember.isLocked, member.getIsLocked())
+                .set(qMember.lockedDate, member.getLockedDate())
                 .execute();
     }
 }

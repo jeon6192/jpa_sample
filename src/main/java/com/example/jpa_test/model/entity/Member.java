@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +31,12 @@ public class Member extends BaseTimeEntity {
 
     private String phone;
 
+    private Integer passwordFailCount;
+
+    private Boolean isLocked;
+
+    private LocalDateTime lockedDate;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "members_roles",
@@ -39,13 +46,17 @@ public class Member extends BaseTimeEntity {
     private Set<Role> roles = new HashSet<>();
 
     @Builder
-    public Member(Long idx, String memberId, String password, String birth, Name name, String phone, Set<Role> roles) {
+    public Member(Long idx, String memberId, String password, String birth, Name name, String phone,
+                  Integer passwordFailCount, Boolean isLocked, LocalDateTime lockedDate, Set<Role> roles) {
         this.idx = idx;
         this.memberId = memberId;
         this.password = password;
         this.birth = birth;
         this.name = name;
         this.phone = phone;
+        this.passwordFailCount = passwordFailCount;
+        this.isLocked = isLocked;
+        this.lockedDate = lockedDate;
         this.roles = roles;
     }
 
@@ -58,5 +69,20 @@ public class Member extends BaseTimeEntity {
 
     public void encodePassword(String encodedPassword) {
         this.password = encodedPassword;
+    }
+
+    public void resetAuthenticationInfo() {
+        this.passwordFailCount = 0;
+        this.isLocked = false;
+        this.lockedDate = null;
+    }
+
+    public void updatePasswordFailCount(Integer passwordFailCount) {
+        this.passwordFailCount = passwordFailCount;
+    }
+
+    public void updateLockedInfo(boolean isLocked, LocalDateTime lockedDate) {
+        this.isLocked = isLocked;
+        this.lockedDate = lockedDate;
     }
 }

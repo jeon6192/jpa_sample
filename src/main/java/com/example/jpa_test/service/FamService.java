@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -61,7 +62,12 @@ public class FamService {
 
         famMembersRepository.save(famMembers);
 
-        return getMembersByFam(famIdx);
+        FamMembersDTO temp = getMembersByFam(famIdx);
+        return FamMembersDTO.builder()
+                .fam(temp.getFam())
+                .famMemberDTOList(temp.getFamMemberDTOList().stream()
+                        .filter(v -> Objects.equals(v.getMember().getIdx(), memberIdx)).collect(Collectors.toList()))
+                .build();
     }
 
     public FamMembersDTO getMembersByFam(Long famIdx) throws UserException {

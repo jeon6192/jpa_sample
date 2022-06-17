@@ -1,8 +1,15 @@
 server:
   port: 8100
 
-# H2
+logging.level:
+  org.hibernate:
+    SQL: TRACE
+    type: TRACE
+
+---
+
 spring:
+  # H2
   h2:
     console:
       enabled: true
@@ -22,7 +29,29 @@ spring:
     hibernate:
       ddl-auto: create
 
-logging.level:
-  org.hibernate:
-    SQL: TRACE
-    type: TRACE
+  config:
+    activate:
+      on-profile:
+
+---
+
+spring:
+  # local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&characterEncoding=UTF-8&useLegacyDatetimeCode=false
+    username: root
+    password: 1234
+
+  jpa:
+    properties.hibernate:
+      format_sql: true
+    hibernate:
+      ddl-auto: none
+
+  sql:
+    init:
+      mode: never
+  config:
+    activate:
+      on-profile: local

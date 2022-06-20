@@ -1,4 +1,4 @@
-package com.example.jpa_test.config.security.handler;
+package com.example.jpa_test.config.security;
 
 import com.example.jpa_test.model.entity.Member;
 import com.example.jpa_test.model.enums.UserError;

@@ -1,4 +1,4 @@
-package com.example.jpa_test.config.security;
+package com.example.jpa_test.config.security.guard;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

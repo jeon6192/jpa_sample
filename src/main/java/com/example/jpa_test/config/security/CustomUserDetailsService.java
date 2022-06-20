@@ -21,7 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // AuthenticationProvider 에서 받은 파라미터 (meberId) 를 통하여 DB 조회
-        Member member = memberRepository.findByMemberId(username).orElseThrow(() -> new UsernameNotFoundException("USER NOT FOUND"));
+        Member member = memberRepository.findByMemberId(username).orElseThrow(()
+                -> new UsernameNotFoundException("USER NOT FOUND"));
 
         // UserDetails 를 상속하여 만든 CustomUserDetails 를 member 객체의 정보를 추가하여 생성 후 리턴
         return CustomUserDetails.builder().member(member).build();

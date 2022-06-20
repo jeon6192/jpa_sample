@@ -1,7 +1,5 @@
 package com.example.jpa_test.config.security;
 
-import com.example.jpa_test.config.security.handler.CustomAuthenticationFailureHandler;
-import com.example.jpa_test.config.security.handler.CustomAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

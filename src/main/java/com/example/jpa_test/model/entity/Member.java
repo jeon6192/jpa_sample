@@ -87,4 +87,8 @@ public class Member extends BaseTimeEntity {
         this.isLocked = isLocked;
         this.lockedDate = lockedDate;
     }
+
+    public boolean isBeforeLockedDate() {
+        return this.lockedDate != null && this.lockedDate.isBefore(LocalDateTime.now());
+    }
 }

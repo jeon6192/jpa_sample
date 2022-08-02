@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@EntityListeners({Fam.class})
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

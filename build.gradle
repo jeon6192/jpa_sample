@@ -30,14 +30,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2.2'
 
     // H2
     implementation 'com.h2database:h2'
@@ -50,7 +48,7 @@ dependencies {
     // Spring LDAP Core
     implementation group: 'org.springframework.ldap', name: 'spring-ldap-core', version: '2.4.0'
 
-    // Spring Boot SAtarter Validation
+    // Spring Boot Starter Validation
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.0'
 
     // Querydsl
@@ -59,6 +57,18 @@ dependencies {
 
     // Mockito
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.6.1'
+
+    // Jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+
+    // Fast Json
+    implementation 'com.alibaba:fastjson:2.0.8'
+
+    // Json Smart
+    implementation 'net.minidev:json-smart:2.4.8'
+
+    // Json Simple
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
 }
 

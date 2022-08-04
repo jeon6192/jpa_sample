@@ -1,8 +1,6 @@
 package com.example.jpa_test.config.security.guard;
 
-import com.example.jpa_test.exception.UserException;
 import com.example.jpa_test.model.enums.UserAuthority;
-import com.example.jpa_test.model.enums.UserError;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,10 +12,8 @@ public class ApiGuard {
     // 인증에 통과시킬 ROLE 종류를 세팅
     private final List<UserAuthority> userAuthorities = List.of(UserAuthority.ROLE_ADMIN);
 
-    public final boolean checkAuthority(Long idx) throws UserException {
-        if (idx == null) {
-            throw new UserException(UserError.BAD_REQUEST);
-        }
+    public final boolean checkAuthority(Long idx) {
+        if (idx == null) return hasRole(getUserAuthorities());
 
         return hasRole(getUserAuthorities()) || isOwner(idx);
     }

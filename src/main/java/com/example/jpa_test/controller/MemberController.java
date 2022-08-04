@@ -49,11 +49,13 @@ public class MemberController {
     }
 
     @GetMapping("/member")
+    @PreAuthorize("@apiGuard.checkAuthority(null)")
     public ResponseEntity<List<MemberDTO>> getMembers() {
         return ok(memberService.getMembers());
     }
 
     @GetMapping("/member/{memberIdx}")
+    @PreAuthorize("@apiGuard.checkAuthority(#memberIdx)")
     public ResponseEntity<MemberDTO> getMemberById(@PathVariable Long memberIdx) throws UserException {
         if (memberIdx == null) {
             throw new UserException(UserError.BAD_REQUEST);

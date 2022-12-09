@@ -7,7 +7,7 @@ import com.example.jpa_test.mapper.MemberMapper;
 import com.example.jpa_test.model.dto.FamDTO;
 import com.example.jpa_test.model.dto.FamMemberDTO;
 import com.example.jpa_test.model.dto.FamMembersDTO;
-import com.example.jpa_test.model.dto.SimpleResponse;
+import com.example.jpa_test.model.dto.UserResponse;
 import com.example.jpa_test.model.entity.Fam;
 import com.example.jpa_test.model.entity.FamMembers;
 import com.example.jpa_test.model.entity.Member;
@@ -84,15 +84,15 @@ public class FamService {
                 .build();
     }
 
-    public SimpleResponse deleteFam(Long famIdx) throws UserException {
+    public UserResponse deleteFam(Long famIdx) throws UserException {
         Fam fam = famRepository.findById(famIdx)
                 .orElseThrow(() -> new UserException(UserError.HAVE_NO_DATA));
         famRepository.delete(fam);
 
-        return SimpleResponse.createSuccessResponse();
+        return UserResponse.createSuccessResponse();
     }
 
-    public SimpleResponse deleteFamMembers(Long famIdx, Long memberIdx) throws UserException {
+    public UserResponse deleteFamMembers(Long famIdx, Long memberIdx) throws UserException {
         Fam fam = FamMapper.INSTANCE.toEntity(getFamById(famIdx));
         Member member = MemberMapper.INSTANCE.toEntity(memberService.getMemberById(memberIdx));
         FamMembers famMembers = famMembersRepository.findByFamAndMember(fam, member)
@@ -100,7 +100,7 @@ public class FamService {
 
         famMembersRepository.delete(famMembers);
 
-        return SimpleResponse.createSuccessResponse();
+        return UserResponse.createSuccessResponse();
     }
 
 }

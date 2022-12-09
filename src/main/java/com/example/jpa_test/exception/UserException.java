@@ -1,18 +1,16 @@
 package com.example.jpa_test.exception;
 
 import com.example.jpa_test.model.enums.UserError;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserException extends Exception {
-    private UserError userError;
-    private String detail;
+    private final UserError userError;
+    private final String detail;
 
     public UserException(UserError userError) {
         this.userError = userError;
+        this.detail = null;
     }
 
     public UserException(UserError userError, String detail) {

@@ -15,7 +15,7 @@ public class ExceptionController {
 
     @ExceptionHandler(UserException.class)
     protected ResponseEntity<ErrorResponse> handleUserException(UserException e) {
-        e.printStackTrace();
+        log.error(e.getMessage());
 
         final UserError userError = e.getUserError();
 
@@ -30,7 +30,7 @@ public class ExceptionController {
 
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
-        e.printStackTrace();
+        log.error(e.getMessage());
 
         final UserError userError = UserError.FORBIDDEN;
 
@@ -44,7 +44,7 @@ public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
-        e.printStackTrace();
+        log.error(e.getMessage());
 
         final UserError userError = UserError.NOT_DEFINED;
 

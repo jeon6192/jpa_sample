@@ -3,7 +3,7 @@ package com.example.jpa_test.service;
 import com.example.jpa_test.exception.UserException;
 import com.example.jpa_test.mapper.MemberMapper;
 import com.example.jpa_test.model.dto.MemberDTO;
-import com.example.jpa_test.model.dto.SimpleResponse;
+import com.example.jpa_test.model.dto.UserResponse;
 import com.example.jpa_test.model.entity.Member;
 import com.example.jpa_test.model.entity.Role;
 import com.example.jpa_test.model.enums.UserAuthority;
@@ -50,12 +50,12 @@ public class MemberService {
                 .orElseThrow(() -> new UserException(UserError.HAVE_NO_DATA)));
     }
 
-    public SimpleResponse deleteMember(Long memberIdx) throws UserException {
+    public UserResponse deleteMember(Long memberIdx) throws UserException {
         Member member = memberRepository.findById(memberIdx)
                 .orElseThrow(() -> new UserException(UserError.HAVE_NO_DATA));
         memberRepository.delete(member);
 
-        return SimpleResponse.createSuccessResponse();
+        return UserResponse.createSuccessResponse();
     }
 
     public MemberDTO updateMemberId(Long memberIdx, MemberDTO memberDTO) throws UserException {

@@ -3,7 +3,7 @@ package com.example.jpa_test.controller;
 import com.example.jpa_test.config.security.CustomUserDetails;
 import com.example.jpa_test.exception.UserException;
 import com.example.jpa_test.model.dto.MemberDTO;
-import com.example.jpa_test.model.dto.SimpleResponse;
+import com.example.jpa_test.model.dto.UserResponse;
 import com.example.jpa_test.model.enums.UserError;
 import com.example.jpa_test.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +66,7 @@ public class MemberController {
 
     @DeleteMapping("/member/{memberIdx}")
     @PreAuthorize("@apiGuard.checkAuthority(#memberIdx)")
-    public ResponseEntity<SimpleResponse> deleteMember(@PathVariable Long memberIdx) throws UserException {
+    public ResponseEntity<UserResponse> deleteMember(@PathVariable Long memberIdx) throws UserException {
         return ok(memberService.deleteMember(memberIdx));
     }
 

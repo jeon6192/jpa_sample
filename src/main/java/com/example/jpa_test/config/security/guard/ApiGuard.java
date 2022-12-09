@@ -28,7 +28,7 @@ public class ApiGuard {
     }
 
     // userAuthorities 에 정해준 ROLE 목록과 현재 로그인 된 유저의 ROLE 목록을 비교함
-    private boolean hasRole(List<?> userAuthorities) {
+    private boolean hasRole(List<UserAuthority> userAuthorities) {
         return GuardHelper.extractMemberAuthorities().containsAll(userAuthorities);
     }
 }

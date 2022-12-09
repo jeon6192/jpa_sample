@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // SpringSecurity 5.7.0 버전 부터는 WebSecurityConfigureAdapter 가 deprecated 되어 새로운 설정 방법 적용
 /**
@@ -17,10 +19,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+	private static final String[] PATHS = {"/signup", "/login", "/h2-console/**", "/ping"};
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-				.authorizeRequests(authRequest -> authRequest.antMatchers("/signup", "/login", "/h2-console/**").permitAll()
+				.authorizeRequests(authRequest -> authRequest.antMatchers(PATHS).permitAll()
 						.anyRequest().authenticated())
 				.csrf().disable()
 				.formLogin()
@@ -39,6 +43,16 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return web -> web.ignoring().antMatchers("/h2-console/**");
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**");
+			}
+		};
 	}
 
 	@Bean

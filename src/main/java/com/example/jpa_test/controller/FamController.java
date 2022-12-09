@@ -4,7 +4,7 @@ import com.example.jpa_test.exception.UserException;
 import com.example.jpa_test.model.dto.FamDTO;
 import com.example.jpa_test.model.dto.FamMemberDTO;
 import com.example.jpa_test.model.dto.FamMembersDTO;
-import com.example.jpa_test.model.dto.SimpleResponse;
+import com.example.jpa_test.model.dto.UserResponse;
 import com.example.jpa_test.model.enums.UserError;
 import com.example.jpa_test.service.FamService;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,7 @@ public class FamController {
 
     @DeleteMapping("/fam/{famIdx}")
     @PreAuthorize("@famGuard.checkAuthority(#famIdx)")
-    public ResponseEntity<SimpleResponse> deleteFam(@PathVariable Long famIdx) throws UserException {
+    public ResponseEntity<UserResponse> deleteFam(@PathVariable Long famIdx) throws UserException {
         if (famIdx == null) {
             throw new UserException(UserError.BAD_REQUEST);
         }
@@ -77,7 +77,7 @@ public class FamController {
 
     @DeleteMapping("/fam/{famIdx}/{memberIdx}")
     @PreAuthorize("@famGuard.checkAuthority(#famIdx, #memberIdx)")
-    public ResponseEntity<SimpleResponse> deleteFamMembers(@PathVariable Long famIdx, @PathVariable Long memberIdx) throws UserException {
+    public ResponseEntity<UserResponse> deleteFamMembers(@PathVariable Long famIdx, @PathVariable Long memberIdx) throws UserException {
         if (famIdx == null || memberIdx == null) {
             throw new UserException(UserError.BAD_REQUEST);
         }

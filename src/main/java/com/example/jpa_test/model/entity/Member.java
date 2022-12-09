@@ -39,7 +39,7 @@ public class Member extends BaseTimeEntity {
 
     private LocalDateTime lockedDate;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "members_roles",
             joinColumns = @JoinColumn(name = "member_idx"),
